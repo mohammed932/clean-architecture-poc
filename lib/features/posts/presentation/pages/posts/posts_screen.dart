@@ -8,12 +8,11 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
-  final PostsData _postsData = PostsData();
+  final PostsData _postsData = PostsData()..getPosts();
 
   @override
   void initState() {
     super.initState();
-    _postsData.getPosts();
   }
 
   @override

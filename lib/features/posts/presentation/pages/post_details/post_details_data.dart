@@ -1,7 +1,6 @@
 part of 'post_details.imports.dart';
 
 class PostDetailsData {
-  /* fff */
   GenericCubit<PostEntity?> postDetailsCubit = GenericCubit(null);
 
   getPostDetails(int postId) async {
