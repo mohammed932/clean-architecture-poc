@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:learn_clean_arch/core/network/dio_helper.dart';
+import 'package:learn_clean_arch/core/network/network_interface.dart';
 import 'package:learn_clean_arch/features/posts/data/repositories/post_repository_impl.dart';
 import 'package:learn_clean_arch/features/posts/domain/repositories/post_repository.dart';
 import 'package:learn_clean_arch/features/posts/domain/usecases/get_post_details_usecase.dart';
@@ -22,12 +23,11 @@ Future<void> init() async {
   sl.registerLazySingleton<PostRepository>(
       () => PostRepositoryImpl(postRemoteDataSource: sl(), postLocalDataSource: sl()));
   // Datasources
-  sl.registerLazySingleton<PostRemoteDataSource>(() => PostRemoteDataSourceImpl(network: DioHelper()));
+  sl.registerLazySingleton<PostRemoteDataSource>(() => PostRemoteDataSourceImpl(network: sl()));
   sl.registerLazySingleton<PostLocalDataSource>(() => PostLocalDataSourceImpl(sharedPreferences: sl()));
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => DioHelper());
-  sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton<INetwork>(() => DioHelper());
 }
